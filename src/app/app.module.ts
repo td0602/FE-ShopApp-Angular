@@ -10,7 +10,9 @@ import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DetailProductComponent } from './detail-product/detail-product.component';
-
+// import
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,16 +27,18 @@ import { DetailProductComponent } from './detail-product/detail-product.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [
     // HomeComponent,// de chay dau tien
     // OrderComponent,
     // OrderConfirmComponent,
-    // LoginComponent,
-    // RegisterComponent, 
-    DetailProductComponent
+    LoginComponent
+    // RegisterComponent
+    // DetailProductComponent
   ] 
 })
 export class AppModule { }
