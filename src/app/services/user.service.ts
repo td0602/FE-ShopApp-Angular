@@ -26,7 +26,11 @@ export class UserService {
   ) { }
 
   createHeaders(): HttpHeaders {
-    return new HttpHeaders({'COntent-Type': 'application/json'});
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept-Language': 'vi' // de mac dinh Vietnamese 
+    
+    })
   }
 
   register(registerDTO: RegisterDTO): Observable<any> { // Observable<any> la gia trij return 

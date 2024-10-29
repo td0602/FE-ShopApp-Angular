@@ -4,9 +4,9 @@ import { NgForm } from '@angular/forms';
 // nhay giao dien
 import { Router } from '@angular/router' 
 // import { error } from 'console';
-import {UserService} from '../services/user.service'
-// import { error } from 'console';
-import { RegisterDTO } from '../dtos/user/register.dto';
+import {UserService} from '../../services/user.service'
+
+import { RegisterDTO } from '../../dtos/user/register.dto';
 
 @Component({
   selector: 'app-register',

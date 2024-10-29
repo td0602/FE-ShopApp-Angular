@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { LoginDTO } from '../dtos/user/login.dto';
+import { UserService } from '../../services/user.service';
+import { LoginDTO } from '../../dtos/user/login.dto';
 // import { error } from 'console';
 import { NgForm } from '@angular/forms';
+import { TokenService } from 'src/app/services/token.service';
+import { LoginResponse } from 'src/app/responses/user/login.response';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +18,10 @@ export class LoginComponent implements OnInit {
   phoneNumber: string ='33445566'; // cap luon gia tri mac dinh
   password: string ='123456';
 
-  constructor(
+  constructor( // Inject
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit(): void {
@@ -36,8 +39,11 @@ export class LoginComponent implements OnInit {
     }
 
     this.userService.login(loginDTO).subscribe({
-      next: (response: any) => {
+      next: (response: LoginResponse) => {
         debugger
+        // lấy token từ server BE để lưu lại sủ dụng trong các yêu cầu API khác -> gắn vào headers
+        const {token} = response;
+        this.tokenService.setToken(token);
         // this.router.navigate(['/login'])
       },
       complete: () => {
