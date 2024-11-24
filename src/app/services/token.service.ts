@@ -1,20 +1,34 @@
-// lưu lại token
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class TokenService {
-    // dang key-value
-    private readonly TOKEN_KEY = 'access_roken';
-    constructor() {
-
+    private readonly TOKEN_KEY = 'access_token';
+    private jwtHelperService = new JwtHelperService();
+    constructor(){}
+    //getter/setter
+    getToken():string {
+        return localStorage.getItem(this.TOKEN_KEY) ?? '';
     }
-//  getter and setter
-    getToken(): string | null {
-        return localStorage.getItem(this.TOKEN_KEY);
+    // lưu token vào local storage
+    setToken(token: string): void {        
+        localStorage.setItem(this.TOKEN_KEY, token);             
     }
-    setToken(token: string): void {
-        localStorage.setItem(this.TOKEN_KEY, token);
+    // lấy ra token rồi kiểm tra xem có trường 'userId' không, nếu có thì lấy ra
+    getUserId(): number {
+        let userObject = this.jwtHelperService.decodeToken(this.getToken() ?? '');
+        return 'userId' in userObject ? parseInt(userObject['userId']) : 0;
+    }
+      
+    removeToken(): void {
+        localStorage.removeItem(this.TOKEN_KEY);
+    }              
+    isTokenExpired(): boolean { 
+        if(this.getToken() == null) {
+            return false;
+        }       
+        return this.jwtHelperService.isTokenExpired(this.getToken()!);
     }
 }
